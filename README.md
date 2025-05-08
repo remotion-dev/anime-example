@@ -9,7 +9,7 @@ https://user-images.githubusercontent.com/1629785/225016439-7664cd6b-21bc-431f-9
 
 ```tsx
 import {useEffect, useRef, useState} from 'react';
-import anime from 'animejs/lib/anime.es.js';
+import anime, {animate} from 'animejs';
 import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
 
 export const MyComposition = () => {
@@ -17,13 +17,12 @@ export const MyComposition = () => {
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
 
-	const [animation, setAnimation] = useState<anime.AnimeInstance | null>(null);
+	const [animation, setAnimation] = useState<anime.JSAnimation | null>(null);
 
 	// Using a useEffect, because anime needs to get the ref once it's mounted
 	useEffect(() => {
 		setAnimation(() => {
-			return anime({
-				targets: ref.current,
+			return animate(ref.current!, {
 				translateX: 270,
 				loop: true,
 				easing: 'easeInOutQuad',
